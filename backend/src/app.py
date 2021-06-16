@@ -15,20 +15,25 @@ def index():
     #file.close()
 
     n = 3 * 10 ** 3
+    c = 2
 
-    values = {'pos': [], 'size': n}
+    values = {'objectCount': c, 'objects': [{'name': 'Planet{}'.format(i + 1),
+     'length': n, 'size': 5 - 2 * i, 'pos': []} for i in range(c)]}
 
-    r = 20
-
-    for i in range(n):
-        t = 0.05 * i
-        x = math.sin(t) * r
-        y = 20 - t ** 0.7
-        z = math.cos(t) * r
+    for obj_num in range(c):
         
-        r = r / (1 + 1e-5 * i)
+        obj = values['objects'][obj_num]
+        
+        r = 20 * (obj_num + 1)
+        for i in range(n):
+            t = 0.05 * i + obj_num * math.pi * 0.5
+            x = math.sin(t) * r
+            y = 20 - t ** 0.7
+            z = math.cos(t) * r
+            
+            r = r / (1 + 1e-5 * i)
 
-        values['pos'].append([10 * x, 10 * y, 10 * z])
+            obj['pos'].append([10 * x, 10 * y, 10 * z])
 
     data = json.dumps(values)
 
