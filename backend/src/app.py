@@ -25,6 +25,7 @@ def index():
         obj = values['objects'][obj_num]
         
         r = 20 * (obj_num + 1)
+        
         for i in range(n):
             t = 0.05 * i + obj_num * math.pi * 0.5
             x = math.sin(t) * r
@@ -38,3 +39,29 @@ def index():
     data = json.dumps(values)
 
     return data
+
+@app.route('/simulator', methods=['GET'])
+def simulator_style():
+    file = open('simulator.css', 'r')
+
+    string = ''
+
+    for line in file:
+        string += line
+
+    file.close()
+    
+    return string
+
+@app.route('/universal', methods=['GET'])
+def universal_style():
+    file = open('universal.css', 'r')
+
+    string = ''
+
+    for line in file:
+        string += line
+
+    file.close()
+    
+    return string

@@ -1,14 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { OrbitControls, OrthographicCamera } from '@react-three/drei'
-import { Canvas } from '@react-three/fiber'
-import StarScene from './components/StarScene'
-import Ball from './components/Ball'
+import { Switch, Route, useLocation } from 'react-router-dom'
+import MenuBar from './components/Menubar'
+import MainPage from './components/MainPage'
+import './App.css'
+import Simulator from './components/Simulator'
 
 const App = () => {
-
   const [data, setData] = useState([])
-  const [bodies, setBodies] = useState([])
+  const [stylePath, setStylePath] = useState('./Universal.css')
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === '/space-simulator') setStylePath('http://localhost:5000/simulator')
+    else setStylePath('http://localhost:5000/universal')
+  }, [location])
+
+  useEffect(() => {
+    const head = document.head
+    const link = document.createElement('link')
+
+    link.type = 'text/css'
+    link.rel = 'stylesheet'
+    link.href = stylePath
+
+    head.appendChild(link)
+    console.log(head)
+    return () => { head.removeChild(link) }
+  }, [stylePath])
 
   useEffect(() => {
     axios.get('http://localhost:5000/api').then(response => {
@@ -16,29 +35,17 @@ const App = () => {
     })
   }, [setData])
 
-  const colorList = ['cyan', 'magenta']
-
-  useEffect(() => {
-    if (data.length) {
-      setBodies(data.map((item, index) => (
-        <Ball key={item.name} position={[0, 0, 0]} data={item.pos} length={item.length} size={item.size} lineColor={colorList[index]}/>
-      )))
-    }
-  }, [data])
-
-  if (!data.length) return <></>
-
   return (
     <>
-      <Canvas style={{ backgroundColor: 'black', width: 1280, height: 720 }} >
-        <OrthographicCamera makeDefault position={[1000, 1000, 1000]} zoom={2} far={10000} />
-        <OrbitControls minZoom={1.5}/>
-        <axesHelper args={[250]}/>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <StarScene />
-        {bodies}
-      </Canvas>
+      <MenuBar />
+      <Switch>
+        <Route path='/space-simulator'>
+          <Simulator data={data}/>
+        </Route>
+        <Route path='/'>
+          <MainPage />
+        </Route>
+      </Switch>
     </>
   )
 }

@@ -1,0 +1,18 @@
+body {
+  overflow-x: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+html {
+  overflow-x: hidden;
+}
+
+.menubar {
+  background-color: rgb(41, 70, 109);
+  padding: 3px;
+}
+
+.menubar.button {
+  padding: 10px;
+  background-color: rgb(72, 180, 207);
+}
