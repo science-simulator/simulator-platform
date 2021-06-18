@@ -39,29 +39,3 @@ def index():
     data = json.dumps(values)
 
     return data
-
-@app.route('/simulator', methods=['GET'])
-def simulator_style():
-    file = open('simulator.css', 'r')
-
-    string = ''
-
-    for line in file:
-        string += line
-
-    file.close()
-    
-    return string
-
-@app.route('/universal', methods=['GET'])
-def universal_style():
-    file = open('universal.css', 'r')
-
-    string = ''
-
-    for line in file:
-        string += line
-
-    file.close()
-    
-    return string

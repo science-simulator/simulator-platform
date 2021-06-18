@@ -3,8 +3,8 @@ import axios from 'axios'
 import { Switch, Route, useLocation } from 'react-router-dom'
 import MenuBar from './components/Menubar'
 import MainPage from './components/MainPage'
-import './App.css'
 import Simulator from './components/Simulator'
+import './App.css'
 
 const App = () => {
   const [data, setData] = useState([])
@@ -12,8 +12,8 @@ const App = () => {
   const location = useLocation()
 
   useEffect(() => {
-    if (location.pathname === '/space-simulator') setStylePath('http://localhost:5000/simulator')
-    else setStylePath('http://localhost:5000/universal')
+    if (location.pathname === '/space-simulator') setStylePath('Simulator.css')
+    else setStylePath('Universal.css')
   }, [location])
 
   useEffect(() => {
