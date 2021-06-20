@@ -2,20 +2,23 @@ import { useFrame } from '@react-three/fiber'
 import React, { useRef } from 'react'
 import { Line } from '@react-three/drei'
 
-const Ball = ({ position, size, data, length, lineColor }) => {
+let counter = 0
+
+const Ball = ({ position, size, data, length, lineColor, step }) => {
   const mesh = useRef()
   const line = useRef()
-  let counter = 0
 
   // eslint-disable-next-line no-unused-vars
-  useFrame((state, delta) => {
+  useFrame(state => {
     mesh.current.position.x = data[counter][0]
     mesh.current.position.y = data[counter][1]
     mesh.current.position.z = data[counter][2]
     line.current.geometry.instanceCount = counter
-    counter = counter + 1
+    counter = counter + step
+    if (counter < 0) counter = length - 1
     if (counter > length - 1) counter = 0
   })
+
   return (
     <>
       <mesh position={position} ref={mesh} >
