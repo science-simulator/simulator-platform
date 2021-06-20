@@ -16,3 +16,13 @@ html {
   padding: 10px;
   background-color: rgb(72, 180, 207);
 }
+
+.managementbar {
+  background-color: rgb(41, 70, 109);
+  padding: 3px;
+}
+
+.managementbar.but {
+  background-color: rgb(72, 180, 207);
+  padding: 8px;
+}
